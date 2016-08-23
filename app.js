@@ -1,43 +1,49 @@
 $(document).ready(function() {
+    $(document).submit(function(event) {
+        // $("ul").append("<li>" 
+        // 	+ $("input").val()
+        // 	+"<Button>check</Button>"+"Button>delete</Button>"+
+        // 	"</li>");
+        //.append()
+        //.append()
+        // .addClass("shopping-list shopping-item")
+        //.append("</li>");
+        $("ul").append(
+            $("<li/>").append(
+                $("<span/>").addClass("shopping-item").append(
+                    $("input").val()
+                )
+            ).append(
+                $("<div/>").addClass("shopping-item-controls")
+                .append(
+                    $("<Button/>").addClass("shopping-item-toggle").append(
+                        $("<span/>").addClass("button-label").append("check")
+                    )
+                ).append(
+                    $("<Button/>").addClass("shopping-item-delete").append(
+                        $("<span/>").addClass("button-label").append("delete")
+                    )
+                )
+            )
 
-  // logic for adding an item to shopping list
-  $("#js-shopping-list-form").submit(function(event) {
-    // stops default browser behavior for form submission,
-    // since we don't actually want to submit to server
-    event.preventDefault();
+        );
 
-    // add new item to botom of list
-    $('.shopping-list').append(
-      '<li>' +
-        '<span class="shopping-item">' + $("#shopping-list-entry").val() + '</span>' +
-        '<div class="shopping-item-controls">' +
-          '<button class="shopping-item-toggle">' +
-            '<span class="button-label">check</span>' +
-          '</button>' +
-          '<button class="shopping-item-delete">' +
-            '<span class="button-label">delete</span>' +
-          '</button>' +
-        '</div>' +
-      '</li>'
-    );
-    // remove the submitted item from the form input
-    $(this)[0].reset();
-  });
+        event.preventDefault();
+        $("input").val("");
+    });
 
-  // logic for deleting items from list
-  $(".shopping-list").on("click", ".shopping-item-delete", function(event){
-    // here `this` refers to the `.shopping-item-delete` element that was clicked.
-    // we travel up the document tree to get the nearest parent element
-    // that"s an `li`
-    $(this).closest("li").remove();
-  });
+    // $(".shopping-item-delete").on('click','li',function(event){
+    // 	this.remove();9
+    // });
 
-  // logic for checking/unchecking items
-  $(".shopping-list").on("click", ".shopping-item-toggle", function(event){
 
-    // toggle the .shopping-item__checked class
-    $(this).closest("li").find(".shopping-item").toggleClass(
-      "shopping-item__checked");
-  });
+    $(document).on('click','.shopping-item-delete', function(event) {
+        $(this).closest('li').remove();
 
-})
+    });
+    $(document).on('click','.shopping-item-toggle', function(event) {
+        $(this).closest('li').find('.shopping-item').toggleClass("shopping-item__checked");
+    });
+
+
+});
